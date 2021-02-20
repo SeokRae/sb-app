@@ -8,7 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class SbController {
 
     @GetMapping("/hello")
-    public ResponseEntity<?> hello() {
+    public ResponseEntity<?> helloPage() {
         return ResponseEntity.ok().body("hello");
     }
+
+    @GetMapping("/")
+    public ResponseEntity<?> rootPage() {
+        return ResponseEntity.ok().body("<a href='https://github.com/SeokRae'>SeokRae</a>");
+    }
+
 }
