@@ -1,0 +1,55 @@
+buildscript {
+    ext {
+        springBootVersion = '2.3.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+group 'kr.seok'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    /* Web */
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    /* Jpa */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    /* db (jpa 설정 시 기본 db가 존재해야 함 */
+    runtimeOnly 'com.h2database:h2'
+
+    /* lombok */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        /* JUnit 5를 사용하는 경우 Junit4 내용을 제거해줘야 함, (이하 버전 사용하려는 경우 주석처리) */
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+/* JUnit5를 사용하는 경우 설정 */
+
+test {
+    useJUnitPlatform()
+}
